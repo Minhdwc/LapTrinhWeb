@@ -1,0 +1,24 @@
+﻿@model List<project_1.Models.Categories>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Index</h2>
+
+<h2>Category</h2>
+<table class="table">
+    <tr>
+        <td>Product Name</td>
+        <td>Produc Price</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="~/Products/ProductsByCate/@item.CategoryId">@item.CategoryId</a>
+            </td>
+            <td>@item.CategoryName</td>
+        </tr>
+    }
+</table>

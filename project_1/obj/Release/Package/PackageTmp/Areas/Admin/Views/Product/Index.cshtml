@@ -1,0 +1,114 @@
+﻿@model List<project_1.Models.Products>
+@{
+    project_1.Models.DBContext db = new project_1.Models.DBContext();
+    List<project_1.Models.Categories> cat = db.Categories.ToList();
+    List<project_1.Models.Brands> brands = db.Brands.ToList();
+}
+@{
+    ViewBag.Title = "Admin";
+}
+<div class="row mx-1 my-2">
+    <h2>Thương hiệu</h2>
+    <div class="loai-item">
+        @foreach (var item in brands)
+        {
+            <a href="/Admin/Product/index/@ViewBag.MaLoai?search=@ViewBag.Search&nameSort=Name&loaiSP=@ViewBag.Cate&brand=@item.BrandId">
+                <button class="btn btn-outline-dark flex-shrink-0">@item.BrandName</button>
+            </a>
+        }
+    </div>
+</div>
+<a href="/admin/product/insert" class="btn btn-outline-secondary">Add Product</a>
+<div class="dropdown">
+    <a class="btn dropdown-toggle" href="/Admin/products/search?nameSort=Name" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Sắp xếp theo tên
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="/Admin/product/index?search=@ViewBag.search&nameSort=ProName&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand">Sắp xếp theo tên</a></li>
+        <li><a class="dropdown-item" href="/Admin/product/index?search=@ViewBag.search&nameSort=PriceUp&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand">Sắp xếp theo giá tăng</a></li>
+        <li><a class="dropdown-item" href="/Admin/product/index?search=@ViewBag.search&nameSort=PriceDown&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand">Sắp xếp theo giá giảm</a></li>
+    </ul>
+</div>
+<table class="table">
+    <tr>
+        <td>Product ID</td>
+        <td>Product Name</td>
+        <td>Product Description</td>
+        <td>Product Image</td>
+        <td>Product Price</td>
+        <td>Product brand</td>
+        <td>Product category</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <p>@item.ProductId</p>
+            </td>
+            <td>
+                <p>@item.ProductName</p>
+            </td>
+            <td>
+                <p>@item.ProductDescription</p>
+            </td>
+            <td>
+                <img src="@item.ProductImage" alt="Product Image" />
+            </td>
+            <td>
+                <p>@item.ProductPrice.ToString("N0")đ</p>
+            </td>
+            <td>
+                <p>@item.Brands.BrandName</p>
+            </td>
+            <td>
+                <p>@item.Categories.CategoryName</p>
+            </td>
+            <td><a href="/Admin/Product/Edit/@item.ProductId">Edit</a> | <a href="/Admin/Product/Delete/@item.ProductId">Delete</a></td>
+        </tr>
+    }
+</table>
+@{
+    int PrevPage = Convert.ToInt32(ViewBag.Page) - 1;
+    if (PrevPage <= 0)
+    {
+        PrevPage = 1;
+    }
+    int NextPage = Convert.ToInt32(ViewBag.Page) + 1;
+    if (NextPage > ViewBag.NoOfPages)
+    {
+        NextPage = ViewBag.NoOfPages;
+    }
+}
+<ul class="pagination justify-content-center">
+    <li class="page-item">
+        <a class="page-link" href="/Admin/Product/index?search=@ViewBag.Search&nameSort=@ViewBag.NameSort&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand&page=@PrevPage&loaiSP=@ViewBag.cat">Pre</a>
+    </li>
+    @for (int i = 0; i < ViewBag.NoOfPages; i++)
+    {
+        <li class="page-item">
+            <a class="page-link" href="/Product/index?search=@ViewBag.Search&nameSort=@ViewBag.NameSort&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand&page=@(i+1)&loaiSP=@ViewBag.cat">@(i+1)</a>
+        </li>
+    }
+    <li class="page-item">
+        <a class="page-link" href="/Admin/Product/index?search=@ViewBag.Search&nameSort=@ViewBag.NameSort&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand&page=@NextPage&loaiSP=@ViewBag.cat">Next</a>
+    </li>
+</ul>
+<style>
+    .row > * {
+        padding: 0 !important;
+    }
+
+    
+    img {
+        max-width: 250px
+    }
+
+    a {
+        text-decoration: none;
+        color: red;
+    }
+    p{
+        font-weight:bold
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

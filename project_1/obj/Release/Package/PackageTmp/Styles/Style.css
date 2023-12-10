@@ -1,0 +1,125 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans:wght@100&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Noto Sans Mono', monospace;
+}
+
+header h3 {
+    background-color: bisque;
+    padding: 10px;
+    text-align: center;
+}
+
+.row {
+    align-items: center;
+}
+
+
+.logo .img-fluid {
+    width: 100%;
+    max-height: 150px;
+}
+.custom {
+    padding: 5px;
+    background-color: red;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff
+}
+
+.menu ul {
+    margin: 0;
+    display: flex;
+}
+
+.menu ul li {
+    list-style-type: none;
+    margin: auto;
+    text-align: center;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #000;
+    transform: bottom right;
+    transition: 0.05s;
+}
+
+.menu ul li:hover a {
+    border-bottom: 2px solid #000;
+    padding-bottom: 1px;
+}
+
+.search {
+    margin-top: 2px !important;
+}
+
+.search input {
+    border-radius: 20px;
+    padding: 5px 3px;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+}
+
+@media (max-width: 767px) 
+{
+    .carousel-inner .carousel-item > div 
+    {
+        display: none
+    }
+
+    .carousel-inner .carousel-item > div:first-child 
+    {
+        display: block
+    }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev 
+{
+    display: flex
+}
+
+@media (min-width: 768px) 
+{
+    .carousel-inner .carousel-item-end.active,
+    .carousel-inner .carousel-item-next 
+    {
+        transform: translateX(25%)
+    }
+
+    .carousel-inner .carousel-item-start.active,
+    .carousel-inner .carousel-item-prev 
+    {
+        transform: translateX(-25%)
+    }
+}
+
+.carousel-inner .carousel-item-end,
+.carousel-inner .carousel-item-start 
+{
+    transform: translateX(0)
+}
+
+.menu ul li:hover a 
+{
+    border-bottom: 2px solid #000;
+    padding-bottom: 1px;
+}
+
+footer section div a:hover{
+    color: red;
+}
+.card:hover {
+    transform: translateY(-10px);
+    transition: 0.3s linear;
+}
+

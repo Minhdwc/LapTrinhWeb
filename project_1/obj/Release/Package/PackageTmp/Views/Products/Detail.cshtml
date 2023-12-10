@@ -1,0 +1,53 @@
+﻿@model project_1.Models.Products
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+<style>
+    .col-md-6 div{
+        margin:10px 0
+    }
+</style>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center main">
+            <div class="col-md-6">
+                <img class="card-img-top mb-5 mb-md-0 shadow-lg"
+                     src="@Model.ProductImage" alt="..." />
+            </div>
+            <div class="col-md-6">
+                <h1 class="display-3 fw-bolder">@Model.ProductName</h1>
+                <div class="fs-5">
+                    <p class="card-text text-danger fw-bold">@string.Format("{0:N0} VNĐ", Model.ProductPrice)</p>
+
+                </div>
+                <div>
+                    @{
+                        string Size = Model.ProductSize;
+                        string[] sizes = Size.Split(',');
+                        foreach (var size in sizes)
+                        {
+                            <button class="btn btn-outline-dark flex-shrink-0 price">@size</button>
+                        }
+                    }
+                </div>
+                <div class="d-flex">
+                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1"
+                           style="max-width: 10rem" />
+                    @Html.ActionLink("Thêm vào giỏ hàng", "Create", "Cart", new { id = Model.ProductId }, new { @class = "btn btn-outline-dark flex-shrink-0" })
+
+                </div>
+                <p class=""><i class="fas fa-box px-3"></i>Ưu đãi tặng vớ dệt kim khi mua hàng</p>
+                <p class=""><i class="fas fa-truck px-3"></i>Nhận hàng trong vòng từ 3 - 7 ngày</p>
+                <p class=""><i class="fas fa-phone px-3"></i>Nhận mọi thông tin phản hồi hoặc tư vấn 24/7</p>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    .price:focus{
+        background:#000;
+        color:#fff;
+    }
+</style>

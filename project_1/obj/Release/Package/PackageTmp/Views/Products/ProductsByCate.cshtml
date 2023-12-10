@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "ProductsByCate";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+@model List<project_1.Models.Products>
+@{
+    project_1.Models.DBContext db = new project_1.Models.DBContext();
+    List<project_1.Models.Categories> cat = db.Categories.ToList();
+    List<project_1.Models.Brands> brands = db.Brands.ToList();
+}
+<style>
+    .card:hover {
+        transform: translateY(-10px);
+        transition: 0.3s linear;
+        cursor:pointer
+    }
+    .card a{
+        text-decoration:none;
+        color:#000
+    }
+    a.custom{
+        color:#fff
+    }
+</style>
+
+@if (ViewBag.brand == 0)
+{
+    <div class="row">
+        <h2>Linh kiện</h2>
+        <ul class="loai-item">
+            @foreach (var item in cat)
+            {
+                <li>
+                    <a href="/Products/Index/@ViewBag.Id?search=@ViewBag.Search&nameSort=Name&loaiSP=@item.CategoryId&brand=@ViewBag.Brand">
+                        <span>@item.CategoryName</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="card col-xl-3 col-sm-12 m-1" style="max-width:300px; min-height:300px">
+            <a href="/products/detail/@item.ProductId">
+                <img src="@item.ProductImage" class="card-img-top" alt="..." style="max-height:350px">
+                <div class="card-body">
+                    <h5 class="card-title">@(item.ProductName.Length > 18 ? item.ProductName.Substring(0, 15) +"..." : item.ProductName)</h5>
+                    <p class="card-text">@string.Format("{0:N0} VNĐ", item.ProductPrice)</p>
+                    @Html.ActionLink("Mua ngay", "Detail", "Products", new { id = item.ProductId }, new { @class = "custom" })
+                </div>
+            </a>
+        </div>
+    }
+    @{
+        int PrevPage = ViewBag.Page - 1;
+        if (PrevPage <= 0)
+        {
+            PrevPage = 1;
+        }
+        int NextPage = ViewBag.Page + 1;
+        if (NextPage > ViewBag.NoOfPages)
+        {
+            NextPage = ViewBag.NoOfPages;
+        }
+    }
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" href="/products/productsbycate/@ViewBag.id?search=&nameSort=&page=@PrevPage">Pre</a>
+        </li>
+        @for (int i = 0; i < ViewBag.NoOfPages; i++)
+        {
+            <li class="page-item">
+                <a class="page-link" href="/products/productsbycate/@ViewBag.id&page=@(i+1)">@(i+1)</a>
+            </li>
+        }
+        <li class="page-item">
+            <a class="page-link" href="/products/productsbycate/@ViewBag.id?search=&nameSort=&page=@NextPage">Next</a>
+        </li>
+    </ul>
+</div>
+
+
+
+<style>
+    .row > * {
+        padding: 0 !important;
+    }
+
+    .row .col-6 {
+        position: relative;
+    }
+
+        .row .col-6 a {
+            position: absolute;
+            right: 0;
+            text-decoration: none;
+            color: #000
+        }
+
+    .card-body p {
+        color: red;
+    }
+
+    .blockContent .card img {
+        width: 300px;
+        height: 300px;
+    }
+
+    .card-product .card {
+        margin: 5px;
+    }
+
+    button {
+        border: solid 1px red;
+        border-radius: 3px;
+        padding: 5px;
+        background-color: red;
+        bottom: 0;
+        color: #fff;
+        font-weight: bold;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var maxHeight = 0;
+        $('.card').each(function () {
+            var height = $(this).height();
+            if (height > maxHeight) {
+                maxHeight = height;
+            }
+        });
+        $('.card').height(maxHeight);
+    });
+</script>
+
+

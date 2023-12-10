@@ -1,0 +1,34 @@
+﻿@model List<project_1.Models.Brands>
+@{
+    ViewBag.Title = "Index";
+}
+<button type="button" id="btnGetBrands" class="btn btn-outline-primary">Get API</button>
+<a href="/admin/brands/insert" class="btn btn-success"> add brand</a>
+<table class="table brandTable">
+    <tr>
+        <td>Brand ID</td>
+        <td>Brand Name</td>
+    </tr>
+    @*@foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.BrandId</td>
+            <td>@item.BrandName</td>
+        </tr>
+    }*@
+</table>
+<script>
+    $('#btnGetBrands').click(() => {
+        $.ajax({
+            type: 'GET',
+            url: '/api/brands',
+            success: (responses) => {
+                for (var i = 0; i < responses.length; i++) {
+                    const brandRow = responses[i];
+                    const strHTML = '<tr><td>' + brandRow.BrandId + '</td><td>' + brandRow.BrandName + '</td><td><a href = "/admin/brands/delete/' + brandRow.BrandId + '">' + "Delete" + '</a></td></td>'+' <td><a href="/admin/brands/Update/'+brandRow.BrandId+'">'+ "Edit" +'</a></td><tr>';
+                    $('.brandTable').append(strHTML);
+                }
+            }
+        })
+    })
+</script>

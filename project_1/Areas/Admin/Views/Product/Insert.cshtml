@@ -1,0 +1,75 @@
+﻿@model project_1.Models.Products
+@{
+    ViewBag.Title = "Insert";
+}
+@{
+    project_1.Models.DBContext dB = new project_1.Models.DBContext();
+    List<project_1.Models.Brands> brands = dB.Brands.ToList();
+    List<project_1.Models.Categories> category = dB.Categories.ToList();
+}
+@using (Html.BeginForm("Insert", "Product" ,"Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div class="container">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration shadow-lg" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Insert Product</h3>
+                        <form>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        @Html.LabelFor(t => t.ProductName)
+                                        @Html.TextBoxFor(t => t.ProductName, new { placeholder = "Product Name", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        @Html.LabelFor(t => t.ProductDescription)
+                                        @Html.TextBoxFor(t => t.ProductDescription, new { placeholder = "Description", @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        @Html.LabelFor(t => t.ProductImage)
+                                        @Html.TextBoxFor(t => t.ProductImage, new { placeholder = "Url Image", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        @Html.LabelFor(t => t.ProductPrice)
+                                        @Html.TextBoxFor(t => t.ProductPrice, new { placeholder = "Price", @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        @Html.LabelFor(t => t.BrandID)
+                                        @Html.DropDownListFor(t => t.BrandID, new SelectList(brands, "BrandId", "BrandName"), "Select Brand", new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        @Html.LabelFor(t => t.CategoryID)
+                                        @Html.DropDownListFor(t => t.CategoryID, new SelectList(category, "CategoryId", "CategoryName"), "Select Category", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-2">
+                                <input class="btn btn-success btn-lg" type="submit" value="Submit" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+}

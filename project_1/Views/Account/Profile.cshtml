@@ -1,0 +1,106 @@
+﻿@model project_1.ViewModel.ProfileVM
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Profile</h2>
+
+<div class="container">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card1 shadow-2-strong card-registration shadow-lg" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Profile</h3>
+                        @using (Html.BeginForm())
+                        {
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-outline row my-2">
+                                        <div class="col-6">
+                                            @Html.LabelFor(model => model.UserName, new { @class = "form-label" })
+                                        </div>
+                                        <div class="col-6">
+                                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-outline row my-2">
+                                        <div class="col-6">
+                                            @Html.LabelFor(model => model.Password, new { @class = "form-label col-6" })
+                                        </div>
+                                        <div class="col-6">
+                                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control col-6", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-outline row my-2">
+                                        <div class="col-6">
+                                            @Html.LabelFor(model => model.Email, new { @class = "form-label col-6" })
+                                        </div>
+                                        <div class="col-6">
+                                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control col-6", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-outline row my-2">
+                                        <div class="col-6">
+                                            @Html.LabelFor(model => model.PhoneNumber, new { @class = "form-label col-6" })
+                                        </div>
+                                        <div class="col-6">
+                                            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control col-6", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-outline row my-2">
+                                        <div class="col-6">
+                                            @Html.LabelFor(model => model.Birth, new { @class = "form-label col-6" })
+                                        </div>
+                                        <div class="col-6">
+                                            @Html.TextBoxFor(model => model.Birth, "{0:MM/dd/yyyy}", new { @class = "form-control col-6", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-outline row my-2">
+                                        <div class="col-6">
+                                            @Html.LabelFor(model => model.City, new { @class = "form-label col-6" })
+                                        </div>
+                                        <div class="col-6">
+                                            @Html.TextBoxFor(model => model.City, new { @class = "form-control col-6", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-outline row my-2">
+                                        <div class="col-6">
+                                            @Html.LabelFor(model => model.Address, new { @class = "form-label col-6" })
+                                        </div>
+                                        <div class="col-6">
+                                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control col-6", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>
+                                <button class="btn btn-danger">Logout</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    button{
+        text-align:center
+    }
+</style>

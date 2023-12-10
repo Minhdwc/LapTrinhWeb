@@ -1,0 +1,157 @@
+﻿@model List<project_1.Models.Products>
+@{
+    project_1.Models.DBContext db = new project_1.Models.DBContext();
+    List<project_1.Models.Categories> cat = db.Categories.ToList();
+    List<project_1.Models.Brands> brands = db.Brands.ToList();
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<div class="row">
+    <h2>Thương hiệu</h2>
+    <div class="loai-item">
+        @foreach (var item in brands)
+        {
+                <a href="/Products/index/@ViewBag.MaLoai?search=@ViewBag.Search&nameSort=Name&loaiSP=@ViewBag.Cate&brand=@item.BrandId">
+                    <button class="btn btn-outline-dark flex-shrink-0">@item.BrandName</button>
+                </a>
+        }
+    </div>
+</div>
+<div class="dropdown">
+    <a class="btn dropdown-toggle" href="/products/search?nameSort=Name" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Sắp xếp theo tên
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="/products/index?search=@ViewBag.search&nameSort=ProName&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand">Sắp xếp theo tên</a></li>
+        <li><a class="dropdown-item" href="/products/index?search=@ViewBag.search&nameSort=PriceUp&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand">Sắp xếp theo giá tăng</a></li>
+        <li><a class="dropdown-item" href="/products/index?search=@ViewBag.search&nameSort=PriceDown&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand">Sắp xếp theo giá giảm</a></li>
+    </ul>
+</div>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="card col-xl-3 col-sm-12 m-1" style="max-width:300px; min-height:300px">
+            <a href="@Url.Action("Detail", "Products", new {id = item.ProductId})">
+                <img src="@item.ProductImage" class="card-img-top" alt="..." style="max-height:350px">
+                <div class="card-body">
+                    <h5 class="card-title">@(item.ProductName.Length > 18 ? item.ProductName.Substring(0, 15) +"..." : item.ProductName)</h5>
+                    <p class="">@string.Format("{0:N0} VNĐ", item.ProductPrice)</p>
+                    @Html.ActionLink("Mua ngay", "create", "Cart", new { id = item.ProductId }, new { @class = "custom" })
+                </div>
+            </a>
+        </div>
+    }
+
+    @{
+        int PrevPage = Convert.ToInt32(ViewBag.Page) - 1;
+        if (PrevPage <= 0)
+        {
+            PrevPage = 1;
+        }
+        int NextPage = Convert.ToInt32(ViewBag.Page) + 1;
+        if (NextPage > ViewBag.NoOfPages)
+        {
+            NextPage = ViewBag.NoOfPages;
+        }
+    }
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" href="/Products/index?search=@ViewBag.Search&nameSort=@ViewBag.NameSort&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand&page=@PrevPage&loaiSP=@ViewBag.cat">Pre</a>
+        </li>
+        @for (int i = 0; i < ViewBag.NoOfPages; i++)
+        {
+            <li class="page-item">
+                <a class="page-link" href="/Products/index?search=@ViewBag.Search&nameSort=@ViewBag.NameSort&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand&page=@(i+1)&loaiSP=@ViewBag.cat">@(i+1)</a>
+            </li>
+        }
+        <li class="page-item">
+            <a class="page-link" href="/Products/index?search=@ViewBag.Search&nameSort=@ViewBag.NameSort&loaiSP=@ViewBag.Cate&brand=@ViewBag.brand&page=@NextPage&loaiSP=@ViewBag.cat">Next</a>
+        </li>
+    </ul>
+</div>
+
+
+
+<style>
+    .row > * {
+        padding: 0 !important;
+    }
+
+    .custom {
+        padding: 5px;
+        background-color: red;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #fff
+    }
+
+    .row .col-6 {
+        position: relative;
+    }
+
+    .loai-item {
+        display:flex;
+        justify-content:space-evenly;
+    }
+
+    .loai-item button{
+        width: 9rem;
+    }
+
+    a {
+        text-decoration: none
+    }
+
+    .row .col-6 a {
+        position: absolute;
+        right: 0;
+        text-decoration: none;
+        color: #000
+    }
+
+    .card h5 {
+        color: #000
+    }
+
+    .card-body p {
+        color: red;
+    }
+
+    .blockContent .card img {
+        width: 300px;
+        height: 300px;
+    }
+
+    .card-product .card {
+        margin: 5px;
+    }
+
+    .card a{
+        color:#fff!important
+    }
+
+    button {
+        border: solid 1px red;
+        border-radius: 3px;
+        padding: 5px;
+        background-color: red;
+        bottom: 0;
+        color: #fff;
+        font-weight: bold;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var maxHeight = 0;
+        $('.card').each(function () {
+            var height = $(this).height();
+            if (height > maxHeight) {
+                maxHeight = height;
+            }
+        });
+        $('.card').height(maxHeight);
+    });
+</script>

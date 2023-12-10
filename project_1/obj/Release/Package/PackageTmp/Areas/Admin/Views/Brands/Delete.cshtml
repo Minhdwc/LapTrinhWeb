@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayoutPage1.cshtml";
+}
+@{
+    project_1.Models.DBContext db = new project_1.Models.DBContext();
+    int id = ViewBag.Id;
+    project_1.Models.Brands brand = db.Brands.Where(t => t.BrandId == id).FirstOrDefault();
+}
+<form action="/admin/brands/delete/@brand.BrandId" method="post" enctype="multipart/form-data class="d-flex">
+    <div class="product container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-12">
+                <h2><strong>Brand Name:</strong> @brand.BrandName</h2>
+                <div class="row">
+                    <h4>Bạn có muốn xoá ?</h4>
+                    <ul class="list-action" style="list-style-type:none">
+                        <li>
+                            <button class="btn btn-danger" type="submit">Xoá</button>
+                        </li>
+                        <li>
+                            <a href="/admin/brands" class="btn btn-success">Huỷ</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
